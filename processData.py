@@ -20,31 +20,31 @@ letters = string.ascii_letters + " .;,'-"
 letters_size = len(letters) + 1
 
 def characterSetSize():
-	return letters_size
+    return letters_size
 
 def characterSet():
-	return letters
+    return letters
 
 def unicodeToAscii(cur_line):
-	return ''.join(
-		c for c in unicodedata.normalize('NFD', cur_line)
-		if unicodedata.category(c) != 'Mn'
-		and c in letters)
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', cur_line)
+        if unicodedata.category(c) != 'Mn'
+        and c in letters)
 
 def readLines(file):
-	lines = open(file, encoding='utf-8').read().strip()
-	lines = lines.split('\n')
-	lines = [unicodeToAscii(line) for line in lines]
-	return lines
+    lines = open(file, encoding='utf-8').read().strip()
+    lines = lines.split('\n')
+    lines = [unicodeToAscii(line) for line in lines]
+    return lines
 
 """
 Load the names dataset to generate new names
 Data stored in the `names` folder with a text file for each language
 """
 def loadNames():
-	all_names = {}
-	for filename in glob.glob('data/names/*.txt'): 
-		category = filename.split('/')[-1].split('.')[0]
-		lines = readLines(filename)
-		all_names[category] = lines
-	return all_names
+    all_names = {}
+    for filename in glob.glob('data/names/*.txt'): 
+        category = filename.split('/')[-1].split('.')[0]
+        lines = readLines(filename)
+        all_names[category] = lines
+    return all_names

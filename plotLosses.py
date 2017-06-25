@@ -13,5 +13,6 @@
 import matplotlib.pyplot as plt
 
 def plotLosses(losses):
-	plt.figure()
-	plt.plot(losses)
+    plt.figure()
+    plt.plot(losses)
+    # plt.show()

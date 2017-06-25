@@ -14,6 +14,7 @@ import random
 
 from processData import loadNames, characterSetSize, characterSet
 from categoryRNN import categoryRNN
+from plotLosses import plotLosses
 
 all_names = loadNames()
 all_types = all_names.keys()
@@ -63,9 +64,14 @@ def train(category_vec, input_line_vec, target_line_vec):
 
 iters = 100000
 print_iter = 5000
+save_iter = 10000
 plot_iter = 500
 total_losses = []
 total_loss = 0
+save_file = 'names-model-checkpoint.dat'
+
+if os.path.isfile(save_file):
+	rnn.load_state_dict(torch.load(save_file))
 
 # Category and class represent the same and are used interchangeably 
 for iter_idx in range(iters):
@@ -77,9 +83,14 @@ for iter_idx in range(iters):
 	output, loss = train(category_vec, input_line_vec, target_line_vec)
 	total_loss += loss
 
+	if iter_idx % save_iter == 0:
+		print "Saving model"
+		torch.save(rnn.state_dict(), save_file)
+
 	if iter_idx % print_iter == 0:
 		print "Iter idx:", iter_idx, "Current loss:", loss
 
 	if iter_idx % plot_iter == 0:
 		total_losses.append(total_loss / plot_iter)
 		total_loss = 0
+		plotLosses(total_losses)

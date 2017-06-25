@@ -19,9 +19,15 @@ import glob
 letters = string.ascii_letters + " .;,'-"
 letters_size = len(letters) + 1
 
-def unicodeToAscii(str):
+def characterSetSize():
+	return letters_size
+
+def characterSet():
+	return letters
+
+def unicodeToAscii(cur_line):
 	return ''.join(
-		c for c in unicodedata.normalize('NFD', s)
+		c for c in unicodedata.normalize('NFD', cur_line)
 		if unicodedata.category(c) != 'Mn'
 		and c in letters)
 

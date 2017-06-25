@@ -27,10 +27,11 @@ class categoryRNN(nn.Module):
 
 	# Predicts a character given the previous character and the hidden state as inputs
 	def forward(self, class_vec, input, hidden):
-		input_comb = torch.cat((class_vec, input, hidden), 1)
+		print class_vec, input, hidden
+		input_comb = torch.cat([class_vec, input, hidden], 1)
 		hidden = self.input2hidden(input_comb)
 		output_temp = self.input2output(input_comb)
-		output_comb = torch.cat((output_temp, hidden), 1)
+		output_comb = torch.cat([output_temp, hidden], 1)
 		output = self.output2output(output_comb)
 		output = self.dropout(output)
 		output = self.softmax(output)

@@ -11,6 +11,9 @@
 """
 
 import random
+import torch
+import os
+import torch.nn as nn
 
 from processData import loadNames, characterSetSize, characterSet
 from categoryRNN import categoryRNN
@@ -77,9 +80,9 @@ if os.path.isfile(save_file):
 for iter_idx in range(iters):
 	category_name = all_types[random.randint(0, len(all_types)-1)]
 	line = all_names[category_name][random.randint(0, len(all_names[category_name])-1)]
-	category_vec = class2Vector(category_name)
-	input_line_vec = inputVector(line)
-	target_line_vec = targetVector(line)
+	category_vec = Variable(class2Vector(category_name))
+	input_line_vec = Variable(inputVector(line))
+	target_line_vec = Variable(targetVector(line))
 	output, loss = train(category_vec, input_line_vec, target_line_vec)
 	total_loss += loss
 

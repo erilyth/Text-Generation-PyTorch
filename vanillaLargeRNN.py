@@ -16,7 +16,7 @@ from torch.autograd import Variable
 
 class vanillaLargeRNN(nn.Module):
     def __init__(self, input_shape, hidden_shape, output_shape):
-        super(vanillaRNN, self).__init__()
+        super(vanillaLargeRNN, self).__init__()
 
         self.hidden_shape = hidden_shape
         self.input2hidden = nn.Linear(input_shape + hidden_shape, hidden_shape)
@@ -39,7 +39,7 @@ class vanillaLargeRNN(nn.Module):
         hidden = self.dropout1(hidden)
         output_temp = self.input2output(input_comb)
         output_temp = self.output2output1(output_temp)
-        output_temp = self.dropout2(hidden)
+        output_temp = self.dropout2(output_temp)
         output_comb = torch.cat([output_temp, hidden], 1)
         output = self.output2output2(output_comb)
         output = self.dropout3(output)

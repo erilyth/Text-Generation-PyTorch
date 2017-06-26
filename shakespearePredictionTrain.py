@@ -20,7 +20,7 @@ from torch.autograd import Variable
 
 from textUtils import inputVector, targetVector
 from processData import loadShakespeare, characterSetSize, characterSet
-from vanillaRNN import vanillaRNN
+from vanillaLargeRNN import vanillaLargeRNN
 from plotLosses import plotLosses
 
 all_shakespeare = loadShakespeare()

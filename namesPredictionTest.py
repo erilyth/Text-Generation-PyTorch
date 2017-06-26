@@ -17,7 +17,7 @@ import string
 
 from torch.autograd import Variable
 
-from namesUtils import class2Vector, inputVector
+from textUtils import class2Vector, inputVector
 from processData import loadNames, characterSetSize, characterSet
 from categoryRNN import categoryRNN
 

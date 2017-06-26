@@ -40,6 +40,7 @@ def readLines(file):
 """
 Load the names dataset to generate new names
 Data stored in the `names` folder with a text file for each language
+Returns a dictionary each containing a list of names belonging to the class
 """
 def loadNames():
     all_names = {}
@@ -48,3 +49,13 @@ def loadNames():
         lines = readLines(filename)
         all_names[category] = lines
     return all_names
+
+"""
+Returns an array of sentences using \n\n as the delimiter
+"""
+def loadShakespeare():
+    filename = 'data/shakespeare/shakespeare.txt'
+    file = open(filename, 'r')
+    splitlines = [li.replace('\n', " ") for li in file.read().split('\n\n')]
+    splitlines = [unicodeToAscii(line) for line in splitlines]
+    return splitlines

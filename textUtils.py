@@ -13,15 +13,10 @@
 import torch
 from processData import loadNames, characterSetSize, characterSet
 
-all_names = loadNames()
-all_types = all_names.keys()
-all_chars = characterSet()
+# Helper functions for loading text data
+# -----------------------------------------------------------------------------
 
-def class2Vector(class_name):
-    class_idx = all_types.index(class_name)
-    class_vec = torch.zeros(1, len(all_types))
-    class_vec[0][class_idx] = 1
-    return class_vec
+all_chars = characterSet()
 
 def inputVector(line):
     input_vec = torch.zeros(len(line), 1, characterSetSize())
@@ -39,3 +34,15 @@ def targetVector(line):
     # Add an EOF as the final target    
     target_vec.append(characterSetSize()-1)
     return torch.LongTensor(target_vec)
+
+
+# Specific to the Names dataset
+# -----------------------------------------------------------------------------
+all_names = loadNames()
+all_types = all_names.keys()
+
+def class2Vector(class_name):
+    class_idx = all_types.index(class_name)
+    class_vec = torch.zeros(1, len(all_types))
+    class_vec[0][class_idx] = 1
+    return class_vec

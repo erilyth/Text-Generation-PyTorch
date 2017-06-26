@@ -43,11 +43,11 @@ if os.path.isfile(save_file):
     rnn.load_state_dict(torch.load(save_file))
 
 def train(input_line_vec, target_line_vec):
-    hidden = rnn.initHidden()
+    hidden1, hidden2, hidden3 = rnn.initHidden()
     rnn.zero_grad()
     loss = 0
     for i in range(min(input_line_vec.size()[0], 150)):
-        output, hidden = rnn(input_line_vec[i], hidden)
+        output, hidden1, hidden2, hidden3 = rnn(input_line_vec[i], hidden1, hidden2, hidden3)
         loss += criterion(output, target_line_vec[i])
     loss.backward()
 

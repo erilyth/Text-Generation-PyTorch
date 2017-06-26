@@ -30,6 +30,7 @@ rnn = categoryRNN(characterSetSize(),
     128, 
     characterSetSize(), 
     len(all_types))
+rnn.eval()
 
 if os.path.isfile(save_file):
     rnn.load_state_dict(torch.load(save_file))

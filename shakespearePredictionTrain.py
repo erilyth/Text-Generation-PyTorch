@@ -23,6 +23,8 @@ from processData import loadShakespeare, characterSetSize, characterSet
 from vanillaLargeRNN import vanillaLargeRNN
 from plotLosses import plotLosses
 
+uses_cuda = True
+
 all_shakespeare = loadShakespeare()
 all_chars = characterSet()
 
@@ -31,6 +33,8 @@ criterion = nn.CrossEntropyLoss()
 learning_rate = 0.0005
 
 rnn = vanillaLargeRNN(characterSetSize(), 256, characterSetSize())
+if uses_cuda:
+    rnn = rnn.cuda()
 
 iters = 100000
 save_iter = 10000
@@ -38,12 +42,20 @@ plot_iter = 250
 total_losses = []
 total_loss = 0
 save_file = 'shakespeare-model-checkpoint.dat'
+if uses_cuda:
+    save_file = 'shakespeare-model-checkpoint-cuda.dat'
 
 if os.path.isfile(save_file):
     rnn.load_state_dict(torch.load(save_file))
 
 def train(input_line_vec, target_line_vec):
     hidden1, hidden2, hidden3 = rnn.initHidden()
+    if uses_cuda:
+        hidden1 = hidden1.cuda()
+        hidden2 = hidden2.cuda()
+        hidden3 = hidden3.cuda()
+        input_line_vec = input_line_vec.cuda()
+        target_line_vec = target_line_vec.cuda()
     rnn.zero_grad()
     loss = 0
     for i in range(min(input_line_vec.size()[0], 150)):
